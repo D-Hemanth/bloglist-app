@@ -32,4 +32,15 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// PUT route api/blogs/:id update a blog using update method after finding the blog using findByPk method
+router.put('/:id', async (req, res) => {
+  const blog = await Blog.findByPk(req.params.id);
+  if (blog) {
+    await blog.update({ likes: req.body.likes });
+    res.json(blog);
+  } else {
+    res.status(400).end();
+  }
+});
+
 module.exports = router;
