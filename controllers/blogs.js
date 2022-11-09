@@ -13,31 +13,32 @@ router.get('/', async (req, res) => {
 // post route to create new blogs using sequelize create method of Blog model
 // it is also possible to save to a database using the build method first to create a Model-object from the desired data, and then calling the save method on it as it lets us edit blog before saving also: const blog = Blog.build(req.body); blog.likes = 3; await blog.save()
 router.post('/', async (req, res) => {
-  try {
-    // console.log('post req.body', req.body);
-    const blog = await Blog.create(req.body);
-    res.json(blog);
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
+  // console.log('post req.body', req.body);
+  const blog = await Blog.create(req.body);
+  res.json(blog);
 });
 
+// the repetitive code of findByPk can be refactored into our own middleware and implement it in the route handlers
+const blogFinder = async (req, res, next) => {
+  req.blog = await Blog.findByPk(req.params.id);
+  next();
+};
+
 // DELETE route api/blogs/:id delete a blog using destroy method after finding the blog using findByPk method
-router.delete('/:id', async (req, res) => {
-  const blog = await Blog.findByPk(req.params.id);
-  if (blog) {
-    await blog.destroy();
+router.delete('/:id', blogFinder, async (req, res) => {
+  if (req.blog) {
+    await req.blog.destroy();
   } else {
     res.status(400).end();
   }
 });
 
 // PUT route api/blogs/:id update a blog using update method after finding the blog using findByPk method
-router.put('/:id', async (req, res) => {
-  const blog = await Blog.findByPk(req.params.id);
-  if (blog) {
-    await blog.update({ likes: req.body.likes });
-    res.json(blog);
+router.put('/:id', blogFinder, async (req, res) => {
+  if (req.blog) {
+    req.blog.likes = req.body.likes;
+    await req.blog.save();
+    res.json(req.blog);
   } else {
     res.status(400).end();
   }

@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
+// express-async-errors library allows us to eliminate the try-catch blocks completely while sending error to errorHandler middleware without using next in routes
+require('express-async-errors');
 
 const { PORT } = require('./util/config');
 const { connectToDatabase } = require('./util/db');
+const errorHandler = require('./util/middleware');
 
 const blogsRouter = require('./controllers/blogs');
 
@@ -10,6 +13,9 @@ const blogsRouter = require('./controllers/blogs');
 app.use(express.json());
 
 app.use('/api/blogs', blogsRouter);
+
+// this has to be the last loaded middleware.
+app.use(errorHandler);
 
 const start = async () => {
   await connectToDatabase();
