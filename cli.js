@@ -6,7 +6,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL);
 const main = async () => {
   try {
     // await sequelize.authenticate();
-    // console.log('Connection has been established succesfully.');
+    // console.log('Connection to database has been established succesfully.');
 
     // execute raw / already prepared SQL queries, you can use the sequelize.query method.
     const blogs = await sequelize.query('SELECT * FROM blogs', {
