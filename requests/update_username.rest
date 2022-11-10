@@ -1,7 +1,7 @@
 # test changing a username through PUT api/users/:username works
-PUT http://localhost:3001/api/users/Hemanth HTTP/1.1
+PUT http://localhost:3001/api/users/Hemanth_D@email.com HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "Hemanth_D"
+  "username": "Hemanth@email.com"
 }

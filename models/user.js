@@ -15,6 +15,9 @@ User.init(
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
+      validate: {
+        isEmail: true, // checks for email format (foo@bar.com)
+      },
     },
     name: {
       type: DataTypes.STRING,

@@ -10,12 +10,8 @@ router.get('/', async (req, res) => {
 
 // POST route for adding a new user
 router.post('/', async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    res.json(user);
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
+  const user = await User.create(req.body);
+  res.json(user);
 });
 
 // PUT api/users/:username - changing a username, keep in mind that the parameter is not id but username
