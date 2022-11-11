@@ -6,7 +6,14 @@ const { SECRET } = require('../util/config');
 
 // get route to get all saved blogs in psql table blogs using sequelize findAll method of Blog model
 router.get('/', async (req, res) => {
-  const blogs = await Blog.findAll();
+  // We have also restricted the values of which fields we want. For each blog, we return all fields including the name of the user associated with the blog but excluding the userId using attributes, exclude & includes options from sequelize
+  const blogs = await Blog.findAll({
+    attributes: { exclude: ['userId'] },
+    include: {
+      model: User,
+      attributes: ['name'],
+    },
+  });
   // In the case of a collection of objects, the method JSON.stringify is better, (null, 2) also Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
   // console.log(JSON.stringify(blogs, null, 2));
   res.json(blogs);

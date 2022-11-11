@@ -1,10 +1,15 @@
 const router = require('express').Router();
 
-const { User } = require('../models');
+const { User, Blog } = require('../models');
 
 // GET route for listing all users
+// we return all fields of the user associated with all the blog fields but excluding the userId using attributes, exclude & includes options from sequelize
 router.get('/', async (req, res) => {
-  const users = await User.findAll();
+  const users = await User.findAll({
+    include: {
+      model: Blog,
+    },
+  });
   res.json(users);
 });
 
