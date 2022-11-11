@@ -15,3 +15,12 @@ Content-Type: application/json
   "username": "Hemanth@email.com",
   "name": "Hemanth D"
 }
+
+### test adding a new user with POST api/users works fine with valid email as username
+POST http://localhost:3001/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "mluukkai@email.com",
+  "name": "mluukkai"
+}

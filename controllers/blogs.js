@@ -1,6 +1,8 @@
 const router = require('express').Router();
+const jwt = require('jsonwebtoken');
 
 const { Blog, User } = require('../models');
+const { SECRET } = require('../util/config');
 
 // get route to get all saved blogs in psql table blogs using sequelize findAll method of Blog model
 router.get('/', async (req, res) => {
@@ -10,11 +12,28 @@ router.get('/', async (req, res) => {
   res.json(blogs);
 });
 
+// The helper function tokenExtractor isolates the token from the authorization header, get token for authorization in every request made to the server
+const tokenExtractor = (req, res, next) => {
+  const authorization = req.get('authorization');
+  // console.log('authorization', authorization);
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    try {
+      // Authorization header will have the value: Bearer eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW then substring(7) returns only the token
+      req.decodedToken = jwt.verify(authorization.substring(7), SECRET);
+    } catch {
+      return res.status(401).json({ error: 'token invalid' });
+    }
+  } else {
+    return res.status(401).json({ error: 'token missing' });
+  }
+  next();
+};
+
 // post route to create new blogs using sequelize create method of Blog model
 // it is also possible to save to a database using the build method first to create a Model-object from the desired data, and then calling the save method on it as it lets us edit blog before saving also: const blog = Blog.build(req.body); blog.likes = 3; await blog.save()
-router.post('/', async (req, res) => {
+router.post('/', tokenExtractor, async (req, res) => {
   // console.log('post req.body', req.body);
-  const user = await User.findOne();
+  const user = await User.findByPk(req.decodedToken.id);
   const blog = await Blog.create({ ...req.body, userId: user.id });
   res.json(blog);
 });
@@ -26,11 +45,20 @@ const blogFinder = async (req, res, next) => {
 };
 
 // DELETE route api/blogs/:id delete a blog using destroy method after finding the blog using findByPk method
-router.delete('/:id', blogFinder, async (req, res) => {
+// route handlers now receive three parameters second being the middleware blogFinder we defined earlier, which retrieves the blog from the database and places it in the blog property of the req object
+router.delete('/:id', blogFinder, tokenExtractor, async (req, res) => {
   if (req.blog) {
-    await req.blog.destroy();
+    const user = await User.findByPk(req.decodedToken.id);
+    if (user.id === req.blog.userId) {
+      await req.blog.destroy();
+    } else {
+      return res.status(401).json({
+        error:
+          "You are not authorized to delete this blog entry since you haven't created it",
+      });
+    }
   } else {
-    res.status(400).end();
+    res.status(400).json({ error: 'Invalid blog id parameter' });
   }
 });
 
@@ -41,7 +69,7 @@ router.put('/:id', blogFinder, async (req, res) => {
     await req.blog.save();
     res.json(req.blog);
   } else {
-    res.status(400).end();
+    res.status(400).json({ error: 'Invalid blog id parameter' });
   }
 });
 
