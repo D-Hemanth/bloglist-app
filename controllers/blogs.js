@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { Blog } = require('../models');
+const { Blog, User } = require('../models');
 
 // get route to get all saved blogs in psql table blogs using sequelize findAll method of Blog model
 router.get('/', async (req, res) => {
@@ -14,7 +14,8 @@ router.get('/', async (req, res) => {
 // it is also possible to save to a database using the build method first to create a Model-object from the desired data, and then calling the save method on it as it lets us edit blog before saving also: const blog = Blog.build(req.body); blog.likes = 3; await blog.save()
 router.post('/', async (req, res) => {
   // console.log('post req.body', req.body);
-  const blog = await Blog.create(req.body);
+  const user = await User.findOne();
+  const blog = await Blog.create({ ...req.body, userId: user.id });
   res.json(blog);
 });
 

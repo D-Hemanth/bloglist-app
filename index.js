@@ -9,12 +9,14 @@ const errorHandler = require('./util/middleware');
 
 const blogsRouter = require('./controllers/blogs');
 const usersRouter = require('./controllers/users');
+const loginRouter = require('./controllers/login');
 
 // It parses incoming JSON requests and puts the parsed data in req.body
 app.use(express.json());
 
 app.use('/api/blogs', blogsRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/login', loginRouter);
 
 // this has to be the last loaded middleware.
 app.use(errorHandler);

@@ -1,3 +1,4 @@
+### check adding blog into blogs table before requiring authorization token to add blogs  
 POST http://localhost:3001/api/blogs HTTP/1.1
 Content-Type: application/json
 
