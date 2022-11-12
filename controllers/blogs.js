@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { Blog, User } = require('../models')
 const { SECRET } = require('../util/config')
 const { Op } = require('sequelize')
+const { sequelize } = require('../util/db')
 
 // get route to get all saved blogs in psql table blogs using sequelize findAll method of Blog model
 router.get('/', async (req, res) => {
@@ -26,6 +27,7 @@ router.get('/', async (req, res) => {
 
   // We have also restricted the values of which fields we want. For each blog, we return all fields including the name of the user associated with the blog but excluding the userId using attributes, exclude & includes options from sequelize
   const blogs = await Blog.findAll({
+    order: sequelize.literal('likes DESC'),
     attributes: { exclude: ['userId'] },
     include: {
       model: User,

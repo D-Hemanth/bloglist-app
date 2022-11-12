@@ -9,3 +9,16 @@ Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbW
   "url": "https://www.starwars.com",
   "title": "May the Force be with you"
 }
+
+### this blog is added by user mluukkai
+### check adding blog into blogs table with authorization token header to add new blogs works  
+### the string bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjozLCJpYXQiOjE2NjgyODU3NTR9.TTCGZ_P4ALgbc6u1ahRh2Jol6iDs-2gwA-65P0OLRCA, where the second value is the token returned by the login operation.
+POST http://localhost:3001/api/blogs HTTP/1.1
+Content-Type: application/json
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjozLCJpYXQiOjE2NjgyODU3NTR9.TTCGZ_P4ALgbc6u1ahRh2Jol6iDs-2gwA-65P0OLRCA
+
+{
+  "author": "Malcolm Wheeler-Nicholson",
+  "url": "https://www.dc.com/",
+  "title": "I'm Batman"
+}
