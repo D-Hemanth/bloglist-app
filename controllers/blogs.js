@@ -13,11 +13,17 @@ router.get('/', async (req, res) => {
   let searchKeyword = `%${req.query.search}%`
   if (req.query.search) {
     where = {
-      title: {
-        [Op.iLike]: searchKeyword,
+      [Op.or]: {
+        title: {
+          [Op.iLike]: searchKeyword,
+        },
+        author: {
+          [Op.iLike]: searchKeyword,
+        },
       },
     }
   }
+
   // We have also restricted the values of which fields we want. For each blog, we return all fields including the name of the user associated with the blog but excluding the userId using attributes, exclude & includes options from sequelize
   const blogs = await Blog.findAll({
     attributes: { exclude: ['userId'] },
