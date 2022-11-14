@@ -1,8 +1,8 @@
 ### check adding blog into blogs table with authorization token header to add new blogs works  
-### the string bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGhAZW1haWwuY29tIiwiaWQiOjIsImlhdCI6MTY2ODE1Njc3OH0.NQAmdNhNfRL10a-g8lPxy0dKRI58fLiMAbwJkI_OgJI, where the second value is the token returned by the login operation.
+### the string bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGhAZW1haWwuY29tIiwiaWQiOjEsImlhdCI6MTY2ODQwNTYwMX0.fpPb17KImNaIx7J9QOmKbaJmPo9voi3fqVyy6xMZyuA, where the second value is the token returned by the login operation.
 POST http://localhost:3001/api/blogs HTTP/1.1
 Content-Type: application/json
-Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGhAZW1haWwuY29tIiwiaWQiOjIsImlhdCI6MTY2ODE1Njc3OH0.NQAmdNhNfRL10a-g8lPxy0dKRI58fLiMAbwJkI_OgJI
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGhAZW1haWwuY29tIiwiaWQiOjEsImlhdCI6MTY2ODQwNTYwMX0.fpPb17KImNaIx7J9QOmKbaJmPo9voi3fqVyy6xMZyuA
 
 {
   "author": "George Lucas",
@@ -12,10 +12,10 @@ Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbW
 
 ### this blog is added by user mluukkai
 ### check adding blog into blogs table with authorization token header to add new blogs works  
-### the string bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjozLCJpYXQiOjE2NjgyODU3NTR9.TTCGZ_P4ALgbc6u1ahRh2Jol6iDs-2gwA-65P0OLRCA, where the second value is the token returned by the login operation.
+### the string bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE2Njg0MDU2NzV9.AxAqROcRrzYA3-NtMx-3IzwtJ2mCWV0pewzzPVHYiMo, where the second value is the token returned by the login operation.
 POST http://localhost:3001/api/blogs HTTP/1.1
 Content-Type: application/json
-Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjozLCJpYXQiOjE2NjgyODU3NTR9.TTCGZ_P4ALgbc6u1ahRh2Jol6iDs-2gwA-65P0OLRCA
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE2Njg0MDU2NzV9.AxAqROcRrzYA3-NtMx-3IzwtJ2mCWV0pewzzPVHYiMo
 
 {
   "author": "Malcolm Wheeler-Nicholson",

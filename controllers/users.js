@@ -15,7 +15,11 @@ router.get('/', async (req, res) => {
 
 // POST route for adding a new user
 router.post('/', async (req, res) => {
-  const user = await User.create(req.body);
+  const user = await User.create({
+    ...req.body,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
   res.json(user);
 });
 
@@ -26,6 +30,7 @@ router.put('/:username', async (req, res) => {
   });
   if (user) {
     user.username = req.body.username;
+    user.updatedAt = new Date();
     await user.save();
     res.json(user);
   } else {
