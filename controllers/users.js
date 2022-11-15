@@ -23,6 +23,26 @@ router.post('/', async (req, res) => {
   res.json(user);
 });
 
+// get /api/users/:id route for getting readinglist of users
+router.get('/:id', async (req, res) => {
+  const user = await User.findByPk(req.params.id, {
+    attributes: { exclude: ['id', 'createdAt', 'updatedAt'] },
+    include: [
+      {
+        model: Blog,
+        as: 'readings',
+        attributes: {
+          exclude: ['userId', 'createdAt', 'updatedAt'],
+        },
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+  res.json(user);
+});
+
 // PUT api/users/:username - changing a username, keep in mind that the parameter is not id but username
 router.put('/:username', async (req, res) => {
   const user = await User.findOne({

@@ -1,0 +1,31 @@
+### post route to add blogs to readinglist of users using blog & user id by user Hemanth works
+POST http://localhost:3001/api/readinglists HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE2Njg0MDU2NzV9.AxAqROcRrzYA3-NtMx-3IzwtJ2mCWV0pewzzPVHYiMo
+
+{
+  "blogId": 2,
+  "userId": 1
+} 
+
+
+### post route to add blogs to readinglist of users using blog & user id  by user mluukkai works
+POST http://localhost:3001/api/readinglists HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE2Njg0MDU2NzV9.AxAqROcRrzYA3-NtMx-3IzwtJ2mCWV0pewzzPVHYiMo
+
+{
+  "blogId": 3,
+  "userId": 2
+} 
+
+
+### post route to add blogs to readinglist of users using blog & user id  by user mluukkai works
+POST http://localhost:3001/api/readinglists HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE2Njg0MDU2NzV9.AxAqROcRrzYA3-NtMx-3IzwtJ2mCWV0pewzzPVHYiMo
+
+{
+  "blogId": 1,
+  "userId": 2
+} 
