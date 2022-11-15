@@ -1,0 +1,8 @@
+### check functionality to mark a blog in the reading list as read works for authorized user & for blogs in his readinglist only
+PUT http://localhost:3001/api/readinglists/2 HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQGVtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE2Njg1MjMwODB9.ul_FiVCk8vmrvC5PwZddHTPbsFFVCQNVxQ8N_s9UFdw
+
+{
+  "read": true
+}
