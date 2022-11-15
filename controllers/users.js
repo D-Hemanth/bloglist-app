@@ -1,6 +1,8 @@
 const router = require('express').Router();
 
-const { User, Blog } = require('../models');
+const { User, Blog, UserBlogs } = require('../models');
+const { Op } = require('sequelize');
+const { sequelize } = require('../util/db');
 
 // GET route for listing all users
 // we return all fields of the user associated with all the blog fields but excluding the userId using attributes, exclude & includes options from sequelize
@@ -35,7 +37,12 @@ router.get('/:id', async (req, res) => {
           exclude: ['userId', 'createdAt', 'updatedAt'],
         },
         through: {
-          attributes: [],
+          attributes: [], // to not include the 'user_blogs' fields
+        },
+        include: {
+          model: UserBlogs,
+          as: 'readinglists', // the alias name here should be the same which we created in controllers/index file i.e. 'readinglists'
+          attributes: ['read', 'id'],
         },
       },
     ],
