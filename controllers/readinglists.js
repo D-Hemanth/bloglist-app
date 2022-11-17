@@ -1,7 +1,6 @@
 const router = require('express').Router()
-const { BOOLEAN } = require('sequelize')
-const { User, UserBlogs } = require('../models')
-const { tokenExtractor } = require('../util/middleware')
+const { UserBlogs } = require('../models')
+const { tokenExtractor, sessionValidator } = require('../util/middleware')
 
 // get route /api/readinglists to fetch all the user_blogs values added in readinglista
 router.get('/', async (req, res) => {
@@ -17,7 +16,7 @@ router.post('/', async (req, res) => {
 })
 
 // Marking as read is done by making a request to the PUT /api/readinglists/:id path
-router.put('/:id', tokenExtractor, async (req, res) => {
+router.put('/:id', tokenExtractor, sessionValidator, async (req, res) => {
   const readinglistEntryToEdit = await UserBlogs.findByPk(req.params.id)
   // get the userId of the user trying to edit the readinglist from tokenExtractor
   const editorUserId = req.decodedToken.id

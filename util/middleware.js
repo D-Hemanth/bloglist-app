@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('./config.js')
+const Sessions = require('../models/sessions')
 
 // next - next function yields control to the next middleware or function or route
 const errorHandler = (error, request, response, next) => {
@@ -51,4 +52,18 @@ const tokenExtractor = (req, res, next) => {
   next()
 }
 
-module.exports = { errorHandler, tokenExtractor }
+// helper function sessionValidator checks if the session token is available in the session table for a given userId
+const sessionValidator = async (req, res, next) => {
+  // find the userId in the session table along with the session token for that userId
+  const userSession = await Sessions.findByPk(req.decodedToken.id)
+
+  if (!userSession) {
+    return res
+      .status(401)
+      .json({ error: 'session has expired!, please login again.' })
+  }
+
+  next()
+}
+
+module.exports = { errorHandler, tokenExtractor, sessionValidator }

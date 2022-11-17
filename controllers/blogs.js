@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { tokenExtractor } = require('../util/middleware')
+const { tokenExtractor, sessionValidator } = require('../util/middleware')
 
 const { Blog, User } = require('../models')
 const { Op } = require('sequelize')
@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
 
 // post route to create new blogs using sequelize create method of Blog model
 // it is also possible to save to a database using the build method first to create a Model-object from the desired data, and then calling the save method on it as it lets us edit blog before saving also: const blog = Blog.build(req.body); blog.likes = 3; await blog.save()
-router.post('/', tokenExtractor, async (req, res) => {
+router.post('/', tokenExtractor, sessionValidator, async (req, res) => {
   // console.log('post req.body', req.body);
   const user = await User.findByPk(req.decodedToken.id)
 
@@ -75,21 +75,27 @@ const blogFinder = async (req, res, next) => {
 
 // DELETE route api/blogs/:id delete a blog using destroy method after finding the blog using findByPk method
 // route handlers now receive three parameters second being the middleware blogFinder we defined earlier, which retrieves the blog from the database and places it in the blog property of the req object
-router.delete('/:id', blogFinder, tokenExtractor, async (req, res) => {
-  if (req.blog) {
-    const user = await User.findByPk(req.decodedToken.id)
-    if (user.id === req.blog.userId) {
-      await req.blog.destroy()
+router.delete(
+  '/:id',
+  blogFinder,
+  tokenExtractor,
+  sessionValidator,
+  async (req, res) => {
+    if (req.blog) {
+      const user = await User.findByPk(req.decodedToken.id)
+      if (user.id === req.blog.userId) {
+        await req.blog.destroy()
+      } else {
+        return res.status(401).json({
+          error:
+            "You are not authorized to delete this blog entry since you haven't created it",
+        })
+      }
     } else {
-      return res.status(401).json({
-        error:
-          "You are not authorized to delete this blog entry since you haven't created it",
-      })
+      res.status(400).json({ error: 'Invalid blog id parameter' })
     }
-  } else {
-    res.status(400).json({ error: 'Invalid blog id parameter' })
   }
-})
+)
 
 // PUT route api/blogs/:id update a blog using update method after finding the blog using findByPk method
 router.put('/:id', blogFinder, async (req, res) => {
