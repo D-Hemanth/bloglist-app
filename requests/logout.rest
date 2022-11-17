@@ -1,0 +1,3 @@
+### check if the logout is allowed for the user with authorization token & valid sessionValidator works
+DELETE http://localhost:3001/api/logout HTTP/1.1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGhAZW1haWwuY29tIiwiaWQiOjEsImlhdCI6MTY2ODQwNTYwMX0.fpPb17KImNaIx7J9QOmKbaJmPo9voi3fqVyy6xMZyuA
