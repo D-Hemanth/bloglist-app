@@ -1,6 +1,6 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize')
 
-const { sequelize } = require('../util/db');
+const { sequelize } = require('../util/db')
 
 class User extends Model {}
 
@@ -29,6 +29,10 @@ User.init(
     updatedAt: {
       type: DataTypes.DATE,
     },
+    disabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     sequelize,
@@ -36,6 +40,6 @@ User.init(
     timestamps: false, // we define that the table does not have to use the timestamps columns (created_at and updated_at)
     modelName: 'user', // the default "model name" would be capitalized User. However we want to have a lowercase initial so we defined 'user'
   }
-);
+)
 
-module.exports = User;
+module.exports = User
